@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Semisolve — Python-based III-V Nitride Semiconductor Device Simulation Framework. Open-source Scriptable TCAD." />
+  <meta name="description" content="Semisolve — Python-based III-V Nitride Semiconductor Device Simulation Framework. Open-source Python-native TCAD." />
   <meta name="keywords" content="TCAD, semiconductor, simulation, GaN, Nitride, Python, drift-diffusion, Poisson solver" />
   <meta name="author" content="Takeru Kumabe" />
 
   <!-- Open Graph / Social Media -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Semisolve — Scriptable TCAD for Nitride Semiconductors" />
+  <meta property="og:title" content="Semisolve — Python-native TCAD for Nitride Semiconductors" />
   <meta property="og:description" content="An open-source, Python-first simulation framework for III-V Nitride heterostructures." />
   <meta property="og:url" content="https://semisolve.org/" />
   <meta property="og:site_name" content="Semisolve" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Semisolve — Scriptable TCAD for Nitride Semiconductors" />
+  <meta name="twitter:title" content="Semisolve — Python-native TCAD for Nitride Semiconductors" />
   <meta name="twitter:description" content="An open-source, Python-first simulation framework for III-V Nitride heterostructures." />
 
   <link rel="canonical" href="https://semisolve.org/" />
@@ -24,7 +24,7 @@
   <link rel="alternate" hreflang="ja" href="https://semisolve.org/" />
   <link rel="alternate" hreflang="x-default" href="https://semisolve.org/" />
 
-  <title>Semisolve — Scriptable TCAD for Nitride Semiconductors</title>
+  <title>Semisolve — Python-native TCAD for Nitride Semiconductors</title>
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -108,6 +108,7 @@ nav.scrolled{background:var(--nav-bg);backdrop-filter:blur(20px);-webkit-backdro
 .hero h1{font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:800;line-height:1.1;letter-spacing:-.04em;margin-bottom:24px;animation:fadeUp .8s var(--ease) .1s both}
 .ja .hero h1{font-size:clamp(1.9rem,4.5vw,3.2rem);line-height:1.3;letter-spacing:0}
 .hero h1 .gr{background:linear-gradient(135deg,var(--pri),var(--acc),var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% 200%;animation:gradientShift 6s ease infinite;font-family:'Inter',sans-serif}
+.hero .hero-sub{font-size:clamp(1.05rem,2vw,1.3rem);color:var(--tx2);font-weight:500;font-style:italic;letter-spacing:.01em;margin-bottom:16px;animation:fadeUp .8s var(--ease) .15s both}
 .hero .lead{font-size:clamp(1rem,1.8vw,1.15rem);color:var(--tx2);max-width:520px;line-height:1.75;margin-bottom:36px;animation:fadeUp .8s var(--ease) .2s both}
 .ja .hero .lead{line-height:1.75}
 .hero-act{display:flex;flex-wrap:wrap;gap:12px;animation:fadeUp .8s var(--ease) .3s both}
@@ -275,7 +276,8 @@ code{font-family:'JetBrains Mono',monospace;font-size:.82em;color:var(--code-tx)
   <div class="hero-ct"><div class="hero-g">
     <div>
       <div class="hero-badge"><span class="pulse-dot"></span>In Development &middot; Public Release Mid-2026</div>
-      <h1><span class="gr">Scriptable TCAD</span> for<br>Nitride Semiconductors</h1>
+      <h1><span class="gr">Python-native TCAD</span> for<br>Nitride Semiconductors</h1>
+      <p class="hero-sub">Script your physics, solve your devices.</p>
       <p class="lead">An open-source, Python-first simulation framework for III-V Nitride heterostructures. Full control over device physics &mdash; no black boxes.</p>
       <div class="hero-act">
         <a href="#feat-en" class="btn btn-p">Explore Features <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
@@ -293,13 +295,13 @@ code{font-family:'JetBrains Mono',monospace;font-size:.82em;color:var(--code-tx)
 </section>
 
 <div class="sec-alt" id="feat-en"><div class="sec">
-  <div class="rv"><div class="sec-lb">Key Features</div><h2 class="sec-t">Physics-first. Python-native.</h2><p class="sec-d">From device definition to publication-ready results &mdash; in pure Python.</p></div>
+  <div class="rv"><div class="sec-lb">Key Features</div><h2 class="sec-t">Python-native. Physics-first.</h2><p class="sec-d">From device definition to publication-ready results &mdash; in pure Python.</p></div>
   <div class="fg">
-    <div class="fc rv rv1"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Open &amp; Extensible</h3><p>An open-source framework prioritizing physical transparency and research flexibility. Designed to bridge the gap between academic theory and numerical simulation.</p><div class="ft"><span class="tag">Apache-2.0</span><span class="tag">FOSS</span></div></div>
-    <div class="fc rv rv2"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><h3>Scriptable TCAD</h3><p>Python-first design gives you full control over device definition, material parameters, and simulation loops using NumPy, SciPy, and Pydantic.</p><div class="ft"><span class="tag">NumPy</span><span class="tag">SciPy</span><span class="tag">Pydantic</span></div></div>
-    <div class="fc rv rv3"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><h3>Data Science Ready</h3><p>Seamlessly integrates with the standard Python data stack. Outputs go straight to analysis, visualization, and ML workflows.</p><div class="ft"><span class="tag">Pandas</span><span class="tag">Matplotlib</span><span class="tag">ML-ready</span></div></div>
+    <div class="fc rv rv1"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><h3>Python-native TCAD</h3><p>Python-first design gives you full control over device definition, material parameters, and simulation loops using NumPy, SciPy, and Pydantic.</p><div class="ft"><span class="tag">NumPy</span><span class="tag">SciPy</span><span class="tag">Pydantic</span></div></div>
+    <div class="fc rv rv2"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><h3>Nitride-Centric Physics</h3><p>Native support for spontaneous and piezoelectric polarization, strain-induced band offsets, and GaN/AlN/InN material systems.</p><div class="ft"><span class="tag">GaN</span><span class="tag">AlN</span><span class="tag">InN</span><span class="tag">Polarization</span></div></div>
+    <div class="fc rv rv3"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Open &amp; Extensible</h3><p>An open-source framework prioritizing physical transparency and research flexibility. Designed to bridge the gap between academic theory and numerical simulation.</p><div class="ft"><span class="tag">Apache-2.0</span><span class="tag">FOSS</span></div></div>
     <div class="fc rv rv4"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82 1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><h3>Numerical Stability</h3><p>Overcomes extreme carrier concentration gradients and underflow in wide-bandgap materials via Hybrid Gummel-Newton and adaptive damping.</p><div class="ft"><span class="tag">Gummel-Newton</span><span class="tag">Adaptive Damping</span></div></div>
-    <div class="fc rv rv5"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><h3>Nitride-Centric Physics</h3><p>Native support for spontaneous and piezoelectric polarization, strain-induced band offsets, and GaN/AlN/InN material systems.</p><div class="ft"><span class="tag">GaN</span><span class="tag">AlN</span><span class="tag">InN</span><span class="tag">Polarization</span></div></div>
+    <div class="fc rv rv5"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><h3>Data Science Ready</h3><p>Seamlessly integrates with the standard Python data stack. Outputs go straight to analysis, visualization, and ML workflows.</p><div class="ft"><span class="tag">Pandas</span><span class="tag">Matplotlib</span><span class="tag">ML-ready</span></div></div>
   </div>
 </div></div>
 
@@ -361,7 +363,7 @@ code{font-family:'JetBrains Mono',monospace;font-size:.82em;color:var(--code-tx)
   <div class="hero-ct"><div class="hero-g">
     <div>
       <div class="hero-badge"><span class="pulse-dot"></span>開発中 &middot; 2026年中盤 公開予定</div>
-      <h1><span class="ja-hero-title">窒化物半導体のための</span> <span class="gr">Scriptable TCAD</span></h1>
+      <h1><span class="ja-hero-title">窒化物半導体のための</span> <span class="gr">Python-native TCAD</span></h1>
       <p class="lead">窒化物半導体に特化した、Pythonベースのオープンソース・シミュレーションフレームワーク。シミュレータ内部をブラックボックス化せず、細部にわたるまで自由なカスタマイズを可能とします。</p>
       <div class="hero-act">
         <a href="#feat-ja" class="btn btn-p">機能を見る <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
@@ -381,11 +383,11 @@ code{font-family:'JetBrains Mono',monospace;font-size:.82em;color:var(--code-tx)
 <div class="sec-alt" id="feat-ja"><div class="sec">
   <div class="rv"><div class="sec-lb">主な特徴</div><h2 class="sec-t">Pythonネイティブ。学術的透明性・再現性。</h2><p class="sec-d">物性値・デバイス構造定義から結果の解析まで、すべてをPythonで完結。すべてのコードが公開済み、誰でも検証可能。</p></div>
   <div class="fg">
-    <div class="fc rv rv1"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>オープン &amp; 拡張可能</h3><p>物理モデルの透明性とカスタマイズ性を追求したオープンな解析基盤。学術的な知見を直接実装し、研究の再現性を確保するために設計されています。</p><div class="ft"><span class="tag">Apache-2.0</span><span class="tag">FOSS</span></div></div>
-    <div class="fc rv rv2"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><h3>Scriptable TCAD</h3><p>Pythonファーストな設計により、NumPy, SciPy, Pydanticをフル活用。デバイス構造、材料パラメータ、計算ループのすべてを自在に制御できます。</p><div class="ft"><span class="tag">NumPy</span><span class="tag">SciPy</span><span class="tag">Pydantic</span></div></div>
-    <div class="fc rv rv3"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><h3>データサイエンス対応</h3><p>Pythonの強力なデータサイエンス・エコシステムとシームレスに連携。計算結果をそのまま分析、可視化、機械学習へと繋げられます。</p><div class="ft"><span class="tag">Pandas</span><span class="tag">Matplotlib</span><span class="tag">ML-ready</span></div></div>
+    <div class="fc rv rv1"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><h3>Python-native TCAD</h3><p>Pythonファーストな設計により、NumPy, SciPy, Pydanticをフル活用。デバイス構造、材料パラメータ、計算ループのすべてを自在に制御できます。</p><div class="ft"><span class="tag">NumPy</span><span class="tag">SciPy</span><span class="tag">Pydantic</span></div></div>
+    <div class="fc rv rv2"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>オープン &amp; 拡張可能</h3><p>物理モデルの透明性とカスタマイズ性を追求したオープンな解析基盤。学術的な知見を直接実装し、研究の再現性を確保するために設計されています。</p><div class="ft"><span class="tag">Apache-2.0</span><span class="tag">FOSS</span></div></div>
+    <div class="fc rv rv3"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><h3>窒化物特有の物理モデル</h3><p>GaN/AlN/InN系における自発・圧電分極、歪みに起因するバンドオフセットなど、窒化物特有の物理現象をネイティブにサポート。</p><div class="ft"><span class="tag">GaN</span><span class="tag">AlN</span><span class="tag">InN</span><span class="tag">Polarization</span></div></div>
     <div class="fc rv rv4"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82 1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><h3>数値的な安定性</h3><p>ワイドバンドギャップ半導体特有の急峻な濃度勾配や数値的なアンダーフローを、Hybrid Gummel-Newton法と適応的ダンピングによって克服。</p><div class="ft"><span class="tag">Gummel-Newton</span><span class="tag">Adaptive Damping</span></div></div>
-    <div class="fc rv rv5"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><h3>窒化物特有の物理モデル</h3><p>GaN/AlN/InN系における自発・圧電分極、歪みに起因するバンドオフセットなど、窒化物特有の物理現象をネイティブにサポート。</p><div class="ft"><span class="tag">GaN</span><span class="tag">AlN</span><span class="tag">InN</span><span class="tag">Polarization</span></div></div>
+    <div class="fc rv rv5"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><h3>データサイエンス対応</h3><p>Pythonの強力なデータサイエンス・エコシステムとシームレスに連携。計算結果をそのまま分析、可視化、機械学習へと繋げられます。</p><div class="ft"><span class="tag">Pandas</span><span class="tag">Matplotlib</span><span class="tag">ML-ready</span></div></div>
   </div>
 </div></div>
 
