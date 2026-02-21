@@ -208,7 +208,7 @@ nav.scrolled{background:var(--nav-bg);backdrop-filter:blur(20px);-webkit-backdro
 .cbox-info{text-align:left;flex:1}
 .cbox-info .name{font-weight:700;font-size:1rem}
 .cbox-info .role{font-size:.82rem;color:var(--tx3)}
-.at-p::before{content:'@'}
+
 
 /* Footer */
 footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center}
@@ -346,9 +346,9 @@ code{font-family:'JetBrains Mono',monospace;font-size:.82em;color:var(--code-tx)
       </a>
     </div>
     <div class="rv rv2">
-      <a href="#" class="cbox em-link" data-u="contact" data-d="semisolve.org">
+      <a href="mailto:contact@semisolve.org" class="cbox">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9 6 9-6"/><rect width="20" height="16" x="2" y="4" rx="2"/></svg>
-        <div class="cbox-info"><div class="name">Email Inquiry</div><div class="role"><span>contact</span><span class="at-p"></span><span>semisolve.org</span></div></div>
+        <div class="cbox-info"><div class="name">Email Inquiry</div><div class="role">contact@semisolve.org</div></div>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--tx3)"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
       </a>
     </div>
@@ -432,9 +432,9 @@ code{font-family:'JetBrains Mono',monospace;font-size:.82em;color:var(--code-tx)
       </a>
     </div>
     <div class="rv rv2">
-      <a href="#" class="cbox em-link" data-u="contact" data-d="semisolve.org">
+      <a href="mailto:contact@semisolve.org" class="cbox">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9 6 9-6"/><rect width="20" height="16" x="2" y="4" rx="2"/></svg>
-        <div class="cbox-info"><div class="name">メールでお問い合わせ</div><div class="role"><span>contact</span><span class="at-p"></span><span>semisolve.org</span></div></div>
+        <div class="cbox-info"><div class="name">メールでお問い合わせ</div><div class="role">contact@semisolve.org</div></div>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--tx3)"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
       </a>
     </div>
@@ -603,10 +603,6 @@ $$('.term').forEach(function(t){
   t.addEventListener('mouseleave',function(){t.style.transform=''});
 });
 
-/* ── Email Obfuscation ── */
-$$('.em-link').forEach(function(el){
-  el.onclick=function(e){e.preventDefault();location.href='mailto:'+el.dataset.u+'@'+el.dataset.d};
-});
 
 })();
 </script>
