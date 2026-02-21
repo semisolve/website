@@ -45,8 +45,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" /></noscript>
+  <link rel="preload" as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=optional" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=optional" /></noscript>
   <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -491,7 +491,8 @@ function setLang(l,init){
   ul.innerHTML='';items.forEach(function(it){var li=document.createElement('li');li.innerHTML='<a href="'+it.h+'">'+it.l+'</a>';ul.appendChild(li)});
   if(l==='ja')loadJaFont();
   initReveals();
-  initLattice(l==='en'?'cv-en':'cv-ja');
+  var ric=window.requestIdleCallback||function(cb){setTimeout(cb,1)};
+  ric(function(){initLattice(l==='en'?'cv-en':'cv-ja')},{timeout:2000});
   runTerm(l==='en'?'tb-en':'tb-ja');
   if(!init)window.scrollTo({top:0});
 }
