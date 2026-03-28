@@ -50,30 +50,30 @@
   <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#fff;--bg2:#f7f9fc;--bg3:#eef3fa;
-  --card:#fff;--border:#dde6f0;--border-lt:#e8eef6;
-  --pri:#1b6ec2;--pri-dk:#155da0;--pri-lt:#3b8de0;
-  --pri-bg:#e8f1fc;--pri-bg2:#d0e3f8;
-  --acc:#0ea5e9;--acc2:#6366f1;
-  --tx:#0c1b33;--tx2:#3d5275;--tx3:#526d87;
-  --code-bg:#f0f4f9;--code-tx:#1558a8;
-  --glow:rgba(27,110,194,.08);--glow2:rgba(27,110,194,.15);
-  --nav-bg:rgba(255,255,255,.82);
-  --sh-s:0 1px 3px rgba(0,0,0,.06);--sh-m:0 4px 24px rgba(27,110,194,.10);--sh-l:0 12px 48px rgba(27,110,194,.14);
-  --r:14px;--rs:8px;--rxs:6px;
+  --bg:#ffffff;--bg2:#f6f8fa;--bg3:#eef1f5;
+  --card:#ffffff;--border:#d0d7de;--border-lt:#e4e8ec;
+  --pri:#0969da;--pri-dk:#0757ba;--pri-lt:#218bff;
+  --pri-bg:#dbeafe;--pri-bg2:#bfdbfe;
+  --acc:#0969da;--acc2:#8250df;
+  --tx:#1f2328;--tx2:#57606a;--tx3:#6e7781;
+  --code-bg:#f6f8fa;--code-tx:#0550ae;
+  --glow:rgba(9,105,218,.08);--glow2:rgba(9,105,218,.16);
+  --nav-bg:rgba(255,255,255,.85);
+  --sh-s:0 1px 2px rgba(140,149,159,.12),0 0 0 1px rgba(140,149,159,.08);--sh-m:0 3px 8px rgba(140,149,159,.15);--sh-l:0 8px 24px rgba(140,149,159,.18);
+  --r:12px;--rs:6px;--rxs:6px;
   --ease:cubic-bezier(.22,1,.36,1);--dur:.35s;
 }
 [data-theme="dark"]{
-  --bg:#0a0f1a;--bg2:#0f1524;--bg3:#141c2e;
-  --card:#141c2e;--border:#1e2d48;--border-lt:#1a2640;
-  --pri:#5ba4e6;--pri-dk:#79baf0;--pri-lt:#3b8de0;
-  --pri-bg:#122240;--pri-bg2:#1a3050;
-  --acc:#38bdf8;--acc2:#818cf8;
-  --tx:#e4ebf5;--tx2:#9cb0ca;--tx3:#5f7a96;
-  --code-bg:#122240;--code-tx:#79baf0;
-  --glow:rgba(91,164,230,.06);--glow2:rgba(91,164,230,.12);
-  --nav-bg:rgba(10,15,26,.82);
-  --sh-s:0 1px 3px rgba(0,0,0,.3);--sh-m:0 4px 24px rgba(0,0,0,.35);--sh-l:0 12px 48px rgba(0,0,0,.45);
+  --bg:#0d1117;--bg2:#161b22;--bg3:#1c2128;
+  --card:#161b22;--border:#30363d;--border-lt:#21262d;
+  --pri:#2f81f7;--pri-dk:#1f6feb;--pri-lt:#58a6ff;
+  --pri-bg:rgba(31,111,235,.15);--pri-bg2:rgba(31,111,235,.25);
+  --acc:#2f81f7;--acc2:#a371f7;
+  --tx:#e6edf3;--tx2:#8b949e;--tx3:#6e7781;
+  --code-bg:#161b22;--code-tx:#79c0ff;
+  --glow:rgba(47,129,247,.08);--glow2:rgba(47,129,247,.15);
+  --nav-bg:rgba(13,17,23,.85);
+  --sh-s:0 1px 2px rgba(0,0,0,.3);--sh-m:0 3px 8px rgba(0,0,0,.3);--sh-l:0 8px 24px rgba(0,0,0,.4);
 }
 html{scroll-behavior:smooth;overflow-x:hidden}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx);line-height:1.7;transition:background var(--dur) var(--ease),color var(--dur) var(--ease);-webkit-font-smoothing:antialiased}
@@ -254,6 +254,23 @@ footer a:hover{text-decoration:underline}
   .ja .hero h1 span{display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis}
 }
 code{font-family:'JetBrains Mono',monospace;font-size:.82em;color:var(--code-tx);background:var(--code-bg);padding:2px 7px;border-radius:4px}
+/* Terminal popup */
+.term-wrap{position:relative}
+.term-popup{position:absolute;top:50%;left:50%;transform:translate(-50%,-48%) scale(.94);width:92%;opacity:0;transition:opacity .55s var(--ease),transform .55s var(--ease);pointer-events:none;z-index:10}
+.term-popup.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+.popup-win{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh-l);overflow:hidden}
+.popup-title-bar{display:flex;align-items:center;gap:8px;padding:9px 14px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.popup-dots{display:flex;gap:5px}
+.popup-dots span{width:11px;height:11px;border-radius:50%}
+.popup-dots span:nth-child(1){background:#ff5f57}
+.popup-dots span:nth-child(2){background:#febc2e}
+.popup-dots span:nth-child(3){background:#28c840}
+.popup-fname{font-size:.72rem;color:var(--tx3);font-family:'JetBrains Mono',monospace;flex:1;text-align:center}
+.popup-body{background:var(--bg);display:flex;align-items:center;justify-content:center}
+.popup-img-light,.popup-img-dark{max-width:100%;max-height:260px;object-fit:contain}
+.popup-img-dark{display:none}
+[data-theme="dark"] .popup-img-light{display:none}
+[data-theme="dark"] .popup-img-dark{display:block}
   </style>
 </head>
 <body>
@@ -289,9 +306,23 @@ code{font-family:'JetBrains Mono',monospace;font-size:.82em;color:var(--code-tx)
       </div>
     </div>
     <div>
-      <div class="term" id="term-en">
-        <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div><span class="term-title">bash</span></div>
-        <div class="term-body" id="tb-en"></div>
+      <div class="term-wrap">
+        <div class="term" id="term-en">
+          <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div><span class="term-title">bash</span></div>
+          <div class="term-body" id="tb-en"></div>
+        </div>
+        <div class="term-popup" id="pop-en">
+          <div class="popup-win">
+            <div class="popup-title-bar">
+              <div class="popup-dots"><span></span><span></span><span></span></div>
+              <span class="popup-fname">hemt_output.png</span>
+            </div>
+            <div class="popup-body">
+              <img class="popup-img-light" src="images/hemt_wavefunctions_light.png" alt="AlGaN/GaN HEMT — Quantum Confined States" loading="lazy" />
+              <img class="popup-img-dark"  src="images/hemt_wavefunctions_dark.png"  alt="AlGaN/GaN HEMT — Quantum Confined States" loading="lazy" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div></div>
@@ -375,9 +406,23 @@ code{font-family:'JetBrains Mono',monospace;font-size:.82em;color:var(--code-tx)
       </div>
     </div>
     <div>
-      <div class="term" id="term-ja">
-        <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div><span class="term-title">bash</span></div>
-        <div class="term-body" id="tb-ja"></div>
+      <div class="term-wrap">
+        <div class="term" id="term-ja">
+          <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div><span class="term-title">bash</span></div>
+          <div class="term-body" id="tb-ja"></div>
+        </div>
+        <div class="term-popup" id="pop-ja">
+          <div class="popup-win">
+            <div class="popup-title-bar">
+              <div class="popup-dots"><span></span><span></span><span></span></div>
+              <span class="popup-fname">hemt_output.png</span>
+            </div>
+            <div class="popup-body">
+              <img class="popup-img-light" src="images/hemt_wavefunctions_light.png" alt="AlGaN/GaN HEMT — Quantum Confined States" loading="lazy" />
+              <img class="popup-img-dark"  src="images/hemt_wavefunctions_dark.png"  alt="AlGaN/GaN HEMT — Quantum Confined States" loading="lazy" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div></div>
@@ -465,8 +510,8 @@ function setTheme(t){
 }
 
 /* ── Language ── */
-var navEN=[{h:'#feat-en',l:'Features'},{h:'#stat-en',l:'Status'},{h:'#lic-en',l:'License'},{h:'#con-en',l:'Contact'}];
-var navJA=[{h:'#feat-ja',l:'機能'},{h:'#stat-ja',l:'状況'},{h:'#lic-ja',l:'ライセンス'},{h:'#con-ja',l:'連絡先'}];
+var navEN=[{h:'#feat-en',l:'Features'},{h:'#stat-en',l:'Status'},{h:'#lic-en',l:'License'},{h:'#con-en',l:'Contact'},{h:'demo.html',l:'Demo'}];
+var navJA=[{h:'#feat-ja',l:'機能'},{h:'#stat-ja',l:'状況'},{h:'#lic-ja',l:'ライセンス'},{h:'#con-ja',l:'連絡先'},{h:'demo.html',l:'デモ'}];
 var lang=localStorage.getItem('ss-lang');
 if(!lang){var n=(navigator.language||'').toLowerCase();lang=n.startsWith('ja')?'ja':'en'}
 var termGen={en:0,ja:0};
@@ -540,38 +585,37 @@ document.addEventListener('visibilitychange',function(){
 var termData=[
   {t:'cmd',s:'pip install semisolve'},
   {t:'out',s:'Collecting semisolve',d:400},
-  {t:'out',s:'  Downloading semisolve-0.1.0-py3-none-any.whl (312 kB)'},
+  {t:'out',s:'  Downloading semisolve-0.2.0-py3-none-any.whl (421 kB)'},
   {t:'out',s:'Installing collected packages: semisolve'},
-  {t:'ok', s:'Successfully installed semisolve-0.1.0'},
+  {t:'ok', s:'Successfully installed semisolve-0.2.0'},
   {t:'blank'},
-  {t:'cmd', s:'vim gan_pnd_jv.py', d:350},
-  {t:'out', s:'  1 import numpy as np'},
-  {t:'out', s:'  2 import matplotlib.pyplot as plt'},
-  {t:'out', s:'  3 import semisolve as ss'},
-  {t:'out', s:'  4 from semisolve.materials import GaN'},
-  {t:'vi',  s:'  5 ~'},
-  {t:'vi',  s:'  6 ~'},
-  {t:'vi',  s:'  7 ~'},
-  {t:'info', s:'"gan_pnd_jv.py" -- INSERT --', d:1400},
-  {t:'ok',  s:':wq'},
+  {t:'cmd',s:'vi hemt_demo.py',d:350},
+  {t:'out',s:'  1 import semisolve as ss'},
+  {t:'out',s:'  2 from semisolve.materials import AlGaN, GaN'},
+  {t:'out',s:'  3 '},
+  {t:'out',s:'  4 layers = [ss.Layer(GaN(Nd=1e15),  200.0),'},
+  {t:'out',s:'  5           ss.Layer(AlGaN(x=0.25),  25.0)]'},
+  {t:'out',s:'  6 struct = ss.Structure1D(layers, orientation="0001")'},
+  {t:'out',s:'  7 result = ss.solve(struct)'},
+  {t:'vi', s:'  8 ~'},
+  {t:'vi', s:'  9 ~'},
+  {t:'info',s:'"hemt_demo.py" -- INSERT --',d:1400},
+  {t:'ok', s:':wq'},
   {t:'blank'},
-  {t:'cmd',s:'python gan_pnd_jv.py'},
-  {t:'info',s:'INFO: Building GaN PN diode structure...',d:600},
-  {t:'out', s:'  n-GaN : Nd=1.0e+18 cm\u207B\u00B3, 500 nm'},
-  {t:'out', s:'  p-GaN : Na=2.0e+19 cm\u207B\u00B3, 300 nm'},
-  {t:'info',s:'INFO: Mesh generated with 238 points'},
-  {t:'info',s:'INFO: Starting J-V sweep (0 V \u2192 5 V)...',d:300},
-  {t:'out', s:'  V = 0.00 V : J = 1.23e-28 A/cm\u00B2'},
-  {t:'out', s:'  V = 0.50 V : J = 2.57e-19 A/cm\u00B2'},
-  {t:'out', s:'  V = 1.00 V : J = 5.38e-10 A/cm\u00B2'},
-  {t:'out', s:'  V = 1.50 V : J = 1.13e-01 A/cm\u00B2'},
-  {t:'out', s:'  V = 2.00 V : J = 2.36e+01 A/cm\u00B2'},
-  {t:'out', s:'  V = 2.50 V : J = 8.74e+02 A/cm\u00B2'},
-  {t:'out', s:'  V = 3.00 V : J = 4.82e+03 A/cm\u00B2'},
-  {t:'out', s:'  V = 3.50 V : J = 1.57e+04 A/cm\u00B2'},
-  {t:'info',s:'INFO: J-V data saved to output/jv_curve.csv'},
-  {t:'ok',  s:'INFO: Plot saved to output/gan_pnd_jv_plot.png'},
+  {t:'cmd',s:'python hemt_demo.py'},
+  {t:'info',s:'INFO: Building Al\u2080.\u2082\u2085Ga\u2080.\u2087\u2085N/GaN HEMT structure...',d:600},
+  {t:'out', s:'  AlGaN barrier : x=0.25, 25 nm'},
+  {t:'out', s:'  GaN buffer    : Nd=1e15 cm\u207B\u00B3, 200 nm'},
+  {t:'info',s:'INFO: Mesh: 318 points (fine near interface)'},
+  {t:'info',s:'INFO: Running Schr\u00F6dinger-Poisson self-consistency...',d:400},
+  {t:'out', s:'  iter  1 : \u0394n = 3.21e-01'},
+  {t:'out', s:'  iter  8 : \u0394n = 4.87e-03'},
+  {t:'out', s:'  iter 20 : \u0394n = 2.14e-05'},
+  {t:'ok',  s:'INFO: Converged in 27 iterations'},
+  {t:'info',s:'INFO: 2DEG sheet density = 1.23e+13 cm\u207B\u00B2'},
+  {t:'ok',  s:'INFO: Plot saved \u2192 hemt_output.png'},
   {t:'blank'},
+  {t:'popup'},
   {t:'end'}
 ];
 
@@ -588,9 +632,21 @@ function runTerm(elId){
     var it=termData[idx++],d=it.d||80;
     if(it.t==='cmd'){var ci=0;(function tick(){if(!alive())return;if(ci<=it.s.length){render('\n<span class="prompt">$ </span><span class="cmd">'+it.s.substring(0,ci)+'</span>'+cur);ci++;setTimeout(tick,26+Math.random()*38)}else{lines.push('<span class="prompt">$ </span><span class="cmd">'+it.s+'</span>');render();setTimeout(next,d)}})()}
     else if(it.t==='blank'){lines.push('');render();setTimeout(next,200)}
+    else if(it.t==='popup'){
+      var popKey=elId==='tb-en'?'pop-en':'pop-ja';
+      var pop=document.getElementById(popKey);
+      if(pop)pop.classList.add('show');
+      setTimeout(next,200);
+    }
     else if(it.t==='end'){
       render('\n<span class="prompt">$ </span>'+cur);
-      setTimeout(function(){if(!alive())return;lines=[];idx=0;render();next()},3500);
+      setTimeout(function(){
+        if(!alive())return;
+        var popKey=elId==='tb-en'?'pop-en':'pop-ja';
+        var pop=document.getElementById(popKey);
+        if(pop)pop.classList.remove('show');
+        setTimeout(function(){if(!alive())return;lines=[];idx=0;render();next()},500);
+      },3500);
     }
     else{setTimeout(function(){if(!alive())return;lines.push('<span class="'+it.t+'">'+it.s+'</span>');render();next()},d)}
   }
