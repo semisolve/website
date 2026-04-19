@@ -207,11 +207,16 @@ code{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.82em;color:v
 }
 /* Mobile */
 @media(max-width:640px){
-  .nav-in{height:58px;padding:0 18px}
-  .nav-ul,.nav-sep{display:none}
+  .nav-in{height:58px;padding:0 16px;gap:8px}
+  .nav-sep{display:none}
+  .nav-ul{display:flex;gap:0}
+  .nav-ul li:not(:last-child){display:none}
+  .nav-ul a{display:inline-flex;align-items:center;height:34px;padding:0 12px;font-size:.72rem;font-weight:600;border:1px solid var(--border);background:var(--card);border-radius:var(--rxs);color:var(--tx2);letter-spacing:.01em;transition:all .2s}
+  .nav-ul a:hover,.nav-ul a.nav-active{color:var(--pri);border-color:var(--pri);background:var(--pri-bg)}
+  .nav-r{gap:6px}
   .nav-logo{font-size:1.02rem}
   .btn-ic,.lang-btn{height:34px}
-  .lang-btn{min-width:68px;font-size:.72rem}
+  .lang-btn{min-width:62px;font-size:.7rem;padding:0 10px}
   .sec,.sec-alt .sec{padding:68px 20px}
   .sec-inner{padding:68px 20px}
   .demo-hero{padding:116px 20px 56px}
@@ -751,17 +756,19 @@ for v in np.arange(0.0, 4.0, 0.1):
     var suffix = lang;
     var z = d.z;
 
-    // ── Band diagram palette (Semisolve brand) ───────────────────────
-    // Conduction band: brand blue  |  Valence band: brand violet
-    // Quantum = solid thick (main result), SC = dashed thin (reference)
-    var C_EC_Q  = '#60a5fa'; // brand blue — Ec quantum (solid)
-    var C_EC_SC = '#93c5fd'; // lighter blue — Ec semiclassical (dashed)
-    var C_EV_Q  = '#a78bfa'; // brand violet — Ev quantum (solid)
-    var C_EV_SC = '#c4b5fd'; // lighter violet — Ev semiclassical (dashed)
-    var C_EF    = '#94a3b8'; // neutral slate — Fermi level
+    // ── Band diagram palette — blue family + red accent ──────────────
+    // Band edges (Ec, Ev) in blue shades (structural).
+    // Wavefunctions in red accent family (the "highlighted" physics result).
+    var isDark = document.documentElement.getAttribute('data-theme')==='dark';
+    var C_EC_Q  = isDark ? '#60a5fa' : '#1d4ed8'; // Ec quantum (solid)
+    var C_EC_SC = isDark ? '#93c5fd' : '#93c5fd'; // Ec semiclassical (dashed)
+    var C_EV_Q  = isDark ? '#3b82f6' : '#3b82f6'; // Ev quantum (solid)
+    var C_EV_SC = isDark ? '#bfdbfe' : '#bfdbfe'; // Ev semiclassical (dashed)
+    var C_EF    = isDark ? '#64748b' : '#94a3b8'; // Fermi level (neutral slate)
 
-    // Wavefunctions: GitHub semantic palette (red → orange → yellow → green → purple)
-    var psiColors = ['#ff7b72','#ffa657','#e3b341','#7ee787','#a371f7'];
+    var psiColors = isDark
+      ? ['#f87171','#fb7185','#fca5a5','#fecaca','#fda4af']
+      : ['#dc2626','#ef4444','#f87171','#fca5a5','#fecdd3'];
     var eigenNames = ['E\u2081','E\u2082','E\u2083','E\u2084','E\u2085'];
 
     var maxPsi = Math.max.apply(null, d.eigenvectors['psi2_0']);
@@ -804,9 +811,10 @@ for v in np.arange(0.0, 4.0, 0.1):
     }), plotlyConfig);
 
     // Density: quantum (solid, primary) vs semiclassical (dashed, muted)
+    var C_SC = isDark ? '#64748b' : '#94a3b8';
     var densityTraces = [
       {x:z, y:d.semiclassical.n, name:'Semiclassical',
-       mode:'lines', line:{color:'#94a3b8',width:1.5,dash:'dash'}},
+       mode:'lines', line:{color:C_SC,width:1.5,dash:'dash'}},
       {x:z, y:d.quantum.n, name:'Quantum (SP)',
        mode:'lines', line:{color:C_EC_Q,width:2.5}},
     ];
@@ -860,8 +868,8 @@ for v in np.arange(0.0, 4.0, 0.1):
     var d = window.pnData;
     if(!d) return;
     var scale = ivScaleState[suffix] || 'linear';
-    // Single clean line — brand blue reads well on both themes
-    var C_IV = '#60a5fa';
+    var isDark = document.documentElement.getAttribute('data-theme')==='dark';
+    var C_IV = isDark ? '#60a5fa' : '#1d4ed8';
     var voltages = d.iv_curve.map(function(p){return p.voltage;});
     var currents = d.iv_curve.map(function(p){return Math.abs(p.J_A_cm2);});
     var traces = [{
@@ -884,16 +892,17 @@ for v in np.arange(0.0, 4.0, 0.1):
     var d = window.pnData;
     if(!d || !d.snapshots[voltageKey]) return;
     var s = d.snapshots[voltageKey];
-    // Band edges: neutral slate (structural, not data)
-    // Quasi-Fermi levels: blue (electrons) / violet (holes) — physically motivated
-    var C_BAND = getCSSVar('--tx2'); // adapts to theme
-    var C_EFN  = '#60a5fa'; // electron quasi-Fermi (brand blue)
-    var C_EFP  = '#f472b6'; // hole quasi-Fermi (rose-pink)
+    // Band edges in blue (structural); quasi-Fermi in red accent (the perturbation).
+    var isDark = document.documentElement.getAttribute('data-theme')==='dark';
+    var C_EC   = isDark ? '#60a5fa' : '#1d4ed8';
+    var C_EV   = isDark ? '#3b82f6' : '#3b82f6';
+    var C_EFN  = isDark ? '#f87171' : '#dc2626';
+    var C_EFP  = isDark ? '#fca5a5' : '#f87171';
     var traces = [
-      {x:s.z, y:s.Ec,  name:'Ec',  mode:'lines', line:{color:C_BAND, width:2}},
-      {x:s.z, y:s.Ev,  name:'Ev',  mode:'lines', line:{color:C_BAND, width:2, dash:'dot'}},
+      {x:s.z, y:s.Ec,  name:'Ec',  mode:'lines', line:{color:C_EC, width:2}},
+      {x:s.z, y:s.Ev,  name:'Ev',  mode:'lines', line:{color:C_EV, width:2, dash:'dot'}},
       {x:s.z, y:s.Efn, name:'E\u1da0\u207F (electron)', mode:'lines', line:{color:C_EFN, width:1.5, dash:'dash'}},
-      {x:s.z, y:s.Efp, name:'E\u1da0\u1d56 (hole)',     mode:'lines', line:{color:C_EFP, width:1.5, dash:'dash'}},
+      {x:s.z, y:s.Efp, name:'E\u1da0\u1d56 (hole)',     mode:'lines', line:{color:C_EFP, width:1.5, dash:'dot'}},
     ];
     Plotly.react('pn-band-'+suffix, traces, plotlyLayout({
       xaxis:{title:'Position (nm)'},
