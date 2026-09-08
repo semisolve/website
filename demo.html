@@ -2,6 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Semisolve Interactive Demo — Explore real simulation outputs: HEMT band diagrams, 2DEG electron density, and GaN PN diode I-V characteristics." />
   <meta name="keywords" content="TCAD, semiconductor, simulation, GaN, AlGaN, HEMT, PN diode, band diagram, drift-diffusion, Python" />
@@ -28,221 +29,19 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=optional" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=optional" /></noscript>
+  <link rel="preload" as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;650;700&family=JetBrains+Mono:wght@400;500&display=optional" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;650;700&family=JetBrains+Mono:wght@400;500&display=optional" /></noscript>
 
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 
-  <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#fbfcfd;--bg2:#f4f6fa;--bg3:#eaeef5;
-  --card:#ffffff;--border:#dde3ec;--border-lt:#eef1f6;--border-hv:#c3cdda;
-  --pri:#1a56db;--pri-dk:#1943a5;--pri-lt:#3b82f6;
-  --pri-bg:#eef4ff;--pri-bg2:#dce8fd;
-  --acc:#0891b2;--acc2:#7c3aed;
-  --tx:#0f172a;--tx2:#475569;--tx3:#64748b;--tx4:#94a3b8;
-  --code-bg:#f1f5f9;--code-tx:#1e40af;
-  --glow:rgba(26,86,219,.06);--glow2:rgba(26,86,219,.14);
-  --nav-bg:rgba(255,255,255,.72);
-  --sh-s:0 1px 2px rgba(15,23,42,.04),0 0 0 1px rgba(15,23,42,.04);
-  --sh-m:0 4px 16px rgba(15,23,42,.06),0 0 0 1px rgba(15,23,42,.04);
-  --sh-l:0 20px 48px rgba(15,23,42,.1),0 0 0 1px rgba(15,23,42,.04);
-  --grid-c:rgba(15,23,42,.045);
-  --r:14px;--rs:8px;--rxs:6px;
-  --ease:cubic-bezier(.22,1,.36,1);--dur:.35s;
-  /* Python syntax — refined palette */
-  --hl-kw:#c026d3;--hl-str:#0f766e;--hl-cmt:#94a3b8;
-  --hl-num:#b45309;--hl-bi:#1e40af;--hl-dec:#dc2626;
-  --hl-fn:#7c3aed;--hl-karg:#15803d;
-}
-[data-theme="dark"]{
-  --bg:#07090e;--bg2:#0d1119;--bg3:#141a26;
-  --card:#0d1119;--border:#1e2533;--border-lt:#141a26;--border-hv:#2a3442;
-  --pri:#60a5fa;--pri-dk:#3b82f6;--pri-lt:#93c5fd;
-  --pri-bg:rgba(59,130,246,.1);--pri-bg2:rgba(59,130,246,.2);
-  --acc:#22d3ee;--acc2:#a78bfa;
-  --tx:#e6edf7;--tx2:#9aa5b8;--tx3:#6b7a91;--tx4:#475569;
-  --code-bg:#0b0e15;--code-tx:#7dd3fc;
-  --glow:rgba(96,165,250,.08);--glow2:rgba(96,165,250,.18);
-  --nav-bg:rgba(7,9,14,.65);
-  --sh-s:0 1px 2px rgba(0,0,0,.3),0 0 0 1px rgba(255,255,255,.03);
-  --sh-m:0 4px 20px rgba(0,0,0,.3),0 0 0 1px rgba(255,255,255,.04);
-  --sh-l:0 24px 60px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.05);
-  --grid-c:rgba(255,255,255,.04);
-  --hl-kw:#f0abfc;--hl-str:#6ee7b7;--hl-cmt:#64748b;
-  --hl-num:#fdba74;--hl-bi:#93c5fd;--hl-dec:#fca5a5;
-  --hl-fn:#c4b5fd;--hl-karg:#86efac;
-}
-html{scroll-behavior:smooth;overflow-x:hidden}
-body{
-  font-family:'Inter',system-ui,sans-serif;
-  background:var(--bg);color:var(--tx);line-height:1.7;
-  transition:background var(--dur) var(--ease),color var(--dur) var(--ease);
-  -webkit-font-smoothing:antialiased;
-  background-image:linear-gradient(var(--grid-c) 1px,transparent 1px),linear-gradient(90deg,var(--grid-c) 1px,transparent 1px);
-  background-size:48px 48px;background-position:-1px -1px;
-}
-body.ja{font-family:'Inter','Noto Sans JP','Hiragino Kaku Gothic ProN','Hiragino Sans','Yu Gothic',sans-serif}
-
-.page{display:none}.page.active{display:block}
-
-/* Nav */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 24px;transition:all var(--dur) var(--ease)}
-nav.scrolled{background:var(--nav-bg);backdrop-filter:saturate(160%) blur(20px);-webkit-backdrop-filter:saturate(160%) blur(20px);border-bottom:1px solid var(--border)}
-.nav-in{max-width:1200px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{display:inline-block;font-family:'Inter',system-ui,sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:-.035em;text-decoration:none;background:linear-gradient(135deg,var(--pri) 0%,var(--acc) 55%,var(--acc2) 100%);background-size:200% 200%;background-position:0% 50%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;color:transparent;transition:background-position .5s var(--ease),filter .25s var(--ease)}
-.nav-logo:hover{background-position:100% 50%;filter:drop-shadow(0 0 12px var(--glow2))}
-.nav-r{display:flex;align-items:center;gap:6px}
-.nav-ul{display:flex;list-style:none;gap:2px}
-.nav-ul a{padding:7px 14px;border-radius:var(--rxs);font-size:.84rem;font-weight:500;color:var(--tx2);text-decoration:none;transition:all .2s}
-.nav-ul a:hover{color:var(--pri);background:var(--glow)}
-.nav-ul a.nav-active{color:var(--pri);background:var(--glow)}
-.nav-sep{width:1px;height:18px;background:var(--border);margin:0 8px}
-.btn-ic{width:32px;height:32px;border-radius:var(--rxs);border:1px solid var(--border);background:var(--card);color:var(--tx2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
-.btn-ic:hover{border-color:var(--pri);color:var(--pri);background:var(--pri-bg)}
-.btn-ic svg{width:15px;height:15px}
-.lang-btn{height:32px;min-width:72px;padding:0 12px;border-radius:var(--rxs);border:1px solid var(--border);background:var(--card);color:var(--tx2);font-size:.74rem;font-weight:600;cursor:pointer;font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:.02em;transition:all .2s;display:inline-flex;align-items:center;justify-content:center}
-.lang-btn:hover{border-color:var(--pri);color:var(--pri);background:var(--pri-bg)}
-
-/* Buttons */
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:var(--rs);font-size:.88rem;font-weight:600;text-decoration:none;font-family:inherit;border:none;cursor:pointer;transition:all .25s var(--ease);letter-spacing:-.005em}
-.btn-p{background:linear-gradient(135deg,var(--pri),var(--pri-lt));color:#fff;box-shadow:0 4px 14px rgba(27,110,194,.28),inset 0 1px 0 rgba(255,255,255,.18)}
-.btn-p:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(27,110,194,.4),inset 0 1px 0 rgba(255,255,255,.2)}
-.btn-s{background:var(--card);color:var(--tx2);border:1px solid var(--border);box-shadow:var(--sh-s)}
-.btn-s:hover{border-color:var(--pri);color:var(--pri);background:var(--pri-bg);transform:translateY(-2px)}
-
-/* Sections */
-.sec{padding:112px 24px;max-width:1200px;margin:0 auto;position:relative}
-.sec-alt{background:var(--bg2);position:relative;border-top:1px solid var(--border-lt);border-bottom:1px solid var(--border-lt)}
-.sec-alt .sec{max-width:1200px;margin:0 auto;padding:112px 24px}
-.sec-lb{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--pri);margin-bottom:16px;display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',ui-monospace,monospace}
-.sec-lb::before{content:'';width:24px;height:1px;background:var(--pri);display:inline-block}
-.sec-t{font-size:clamp(1.9rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-.045em;line-height:1.15;margin-bottom:18px}
-.ja .sec-t{font-size:clamp(1.5rem,3vw,2.25rem);letter-spacing:-.01em;line-height:1.3}
-.sec-d{font-size:1.02rem;color:var(--tx2);max-width:620px;line-height:1.75}
-.ja .sec-d{line-height:1.75}
-.lead{font-size:clamp(1rem,1.8vw,1.15rem);color:var(--tx2);max-width:640px;line-height:1.75;margin:0 auto}
-.ja .lead{line-height:1.75}
-
-/* Footer */
-footer{border-top:1px solid var(--border);padding:40px 24px;text-align:center;background:var(--bg)}
-footer p{font-size:.78rem;color:var(--tx3);font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:.02em}
-footer a{color:var(--pri);text-decoration:none}
-footer a:hover{text-decoration:underline}
-
-/* Reveal */
-.rv{opacity:0;transform:translateY(32px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-.rv.vis{opacity:1;transform:none}
-.rv1{transition-delay:.08s}.rv2{transition-delay:.16s}.rv3{transition-delay:.24s}.rv4{transition-delay:.32s}.rv5{transition-delay:.4s}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
-@keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-
-code{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.82em;color:var(--code-tx);background:var(--code-bg);padding:2px 7px;border-radius:4px}
-
-/* Demo hero */
-.demo-hero{position:relative;padding:140px 24px 72px;text-align:center;overflow:hidden}
-.demo-hero::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 70% 60% at 50% 20%,var(--pri-bg),transparent 65%);opacity:.8;pointer-events:none}
-.demo-hero::after{content:'';position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 40% 40% at 80% 80%,var(--glow2),transparent 60%);pointer-events:none}
-.demo-hero-ct{position:relative;z-index:1;max-width:720px;margin:0 auto}
-.demo-hero .sec-lb{margin-bottom:20px}
-.demo-hero h1{font-size:clamp(2rem,5vw,3.1rem);font-weight:800;letter-spacing:-.045em;line-height:1.1;margin-bottom:18px}
-.demo-hero h1 .gr{background:linear-gradient(135deg,var(--pri),var(--acc),var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% 200%;animation:gradientShift 8s ease infinite}
-.ja .demo-hero h1{letter-spacing:-.01em;line-height:1.3}
-
-/* Charts */
-.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:40px}
-.chart-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px 22px 18px;box-shadow:var(--sh-s);transition:box-shadow var(--dur) var(--ease),border-color var(--dur) var(--ease);position:relative;overflow:hidden}
-.chart-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--pri),var(--acc),var(--acc2));opacity:0;transition:opacity var(--dur) var(--ease)}
-.chart-card:hover{box-shadow:var(--sh-m);border-color:var(--pri-lt)}
-.chart-card:hover::before{opacity:1}
-.chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--border-lt)}
-.chart-title{font-size:.78rem;font-weight:700;color:var(--tx2);letter-spacing:.08em;text-transform:uppercase;font-family:'JetBrains Mono',ui-monospace,monospace;display:flex;align-items:center;gap:8px}
-.chart-title::before{content:'';width:8px;height:8px;border-radius:2px;background:linear-gradient(135deg,var(--pri),var(--acc2));box-shadow:0 0 8px var(--glow2)}
-.chart-card>.chart-title{margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border-lt)}
-
-/* Toggle buttons */
-.toggle-group{display:inline-flex;gap:0;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:2px}
-.toggle-btn{padding:5px 14px;border-radius:5px;border:none;background:transparent;color:var(--tx3);font-size:.72rem;font-weight:600;letter-spacing:.03em;cursor:pointer;transition:all .2s;font-family:'JetBrains Mono',ui-monospace,monospace}
-.toggle-btn.active{background:var(--card);color:var(--pri);box-shadow:var(--sh-s)}
-.toggle-btn:not(.active):hover{color:var(--tx2)}
-
-/* Voltage select */
-.select-wrap{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;color:var(--tx3);font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
-.v-select{padding:5px 10px;border-radius:var(--rxs);border:1px solid var(--border);background:var(--card);color:var(--tx);font-size:.78rem;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;cursor:pointer;transition:border-color .2s}
-.v-select:hover{border-color:var(--pri-lt)}
-.v-select:focus{outline:2px solid var(--pri);outline-offset:1px;border-color:var(--pri)}
-
-/* Chart plot area */
-.chart-plot{min-height:300px;margin-top:8px}
-.chart-error{color:var(--tx3);font-size:.85rem;padding:48px 24px;text-align:center;line-height:1.7}
-
-/* Code cards */
-.code-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:36px;box-shadow:var(--sh-s);transition:box-shadow var(--dur) var(--ease)}
-.code-card:hover{box-shadow:var(--sh-m)}
-.code-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:var(--bg2);border-bottom:1px solid var(--border)}
-.code-lang{font-size:.66rem;font-weight:700;color:var(--pri);letter-spacing:.14em;text-transform:uppercase;font-family:'JetBrains Mono',ui-monospace,monospace;display:inline-flex;align-items:center;gap:8px}
-.code-lang::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--pri);box-shadow:0 0 6px var(--glow2)}
-.code-file{font-size:.74rem;color:var(--tx3);font-family:'JetBrains Mono',ui-monospace,monospace}
-.code-block{margin:0;padding:22px 24px;overflow-x:auto;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.78rem;line-height:1.75;color:var(--tx);white-space:pre;background:var(--code-bg)}
-.hl-kw{color:var(--hl-kw);font-weight:600}
-.hl-str{color:var(--hl-str)}
-.hl-cmt{color:var(--hl-cmt);font-style:italic}
-.hl-num{color:var(--hl-num)}
-.hl-bi{color:var(--hl-bi)}
-.hl-dec{color:var(--hl-dec)}
-.hl-fn{color:var(--hl-fn)}
-.hl-karg{color:var(--hl-karg)}
-
-/* PN section inner */
-.sec-inner{max-width:1200px;margin:0 auto;padding:112px 24px}
-
-/* Tablet */
-@media(max-width:960px){
-  .chart-grid{grid-template-columns:1fr;gap:18px}
-  .nav-in{padding:0 18px}
-  .sec,.sec-alt .sec{padding:96px 28px}
-  .sec-inner{padding:96px 28px}
-}
-/* Mobile */
-@media(max-width:640px){
-  .nav-in{height:58px;padding:0 16px;gap:8px}
-  .nav-sep{display:none}
-  .nav-ul{display:flex;gap:0}
-  .nav-ul li:not(:last-child){display:none}
-  .nav-ul a{display:inline-flex;align-items:center;height:34px;padding:0 12px;font-size:.72rem;font-weight:600;border:1px solid var(--border);background:var(--card);border-radius:var(--rxs);color:var(--tx2);letter-spacing:.01em;transition:all .2s}
-  .nav-ul a:hover,.nav-ul a.nav-active{color:var(--pri);border-color:var(--pri);background:var(--pri-bg)}
-  .nav-r{gap:6px}
-  .nav-logo{font-size:1.02rem}
-  .btn-ic,.lang-btn{height:34px}
-  .lang-btn{min-width:62px;font-size:.7rem;padding:0 10px}
-  .sec,.sec-alt .sec{padding:68px 20px}
-  .sec-inner{padding:68px 20px}
-  .demo-hero{padding:116px 20px 56px}
-  .demo-hero h1{font-size:clamp(1.9rem,7vw,2.5rem)}
-  .chart-grid{gap:14px;margin-top:32px}
-  .chart-card{padding:18px 16px 14px;border-radius:12px}
-  .chart-header{gap:8px;padding-bottom:10px;margin-bottom:10px}
-  .chart-title{font-size:.7rem}
-  .toggle-btn{padding:5px 10px;font-size:.68rem}
-  .v-select{font-size:.74rem;padding:5px 8px}
-  .select-wrap{font-size:.68rem;gap:6px}
-  .chart-plot{min-height:260px}
-  .code-card{margin-top:28px;border-radius:12px}
-  .code-header{padding:10px 14px}
-  .code-lang,.code-file{font-size:.68rem}
-  .code-block{padding:16px 18px;font-size:.72rem;line-height:1.7}
-  body{background-size:36px 36px}
-  footer{padding:32px 20px}
-  footer p{line-height:2}
-}
-  </style>
+  <link rel="stylesheet" href="styles/shared.css" />
+  <link rel="stylesheet" href="styles/demo.css" />
 </head>
 <body>
+<a class="skip-link" href="#main-content" id="skipLink">Skip to content</a>
 
 <!-- ══════ Nav ══════ -->
-<nav id="nav">
+<nav id="nav" aria-label="Main navigation">
   <div class="nav-in">
     <a href="index.html" class="nav-logo">Semisolve</a>
     <div class="nav-r">
@@ -256,43 +55,45 @@ code{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.82em;color:v
 
 <!-- ══════ ENGLISH ══════ -->
 <div class="page" id="page-en">
-<main>
+<main tabindex="-1">
 
 <!-- Hero -->
 <section class="demo-hero">
   <div class="demo-hero-ct">
-    <div class="sec-lb rv">Interactive Demo</div>
-    <h1 class="rv rv1">Simulation Results</h1>
-    <p class="lead rv rv2">Explore real outputs from Semisolve — band diagrams, electron density, and I-V characteristics computed from physics-based models.</p>
+    <div class="sec-lb">Interactive Demo</div>
+    <h1>Explore the physics.</h1>
+    <p class="lead">Explore precomputed Semisolve outputs: band structures, electron density, and current characteristics. These are saved results, not live simulations.</p>
+    <div class="demo-jumps"><a href="#hemt-en">AlGaN/GaN HEMT ↓</a><a href="#pn-en">GaN PN diode ↓</a></div>
   </div>
 </section>
 
 <!-- HEMT Demo -->
 <div class="sec-alt" id="hemt-en"><div class="sec">
-  <div class="rv">
+  <div>
     <div class="sec-lb">HEMT Demo</div>
     <h2 class="sec-t">Al&#x2080;.&#x2082;&#x2085;Ga&#x2080;.&#x2087;&#x2085;N/GaN HEMT &mdash; Band Diagram &amp; 2DEG</h2>
     <p class="sec-d">Self-consistent Schr&ouml;dinger-Poisson solution showing quantum confinement effects on the 2DEG at the AlGaN/GaN interface.</p>
   </div>
 
-  <div class="chart-grid rv rv1">
+  <div class="chart-grid">
     <div class="chart-card">
       <div class="chart-title">Band Diagram</div>
-      <div id="hemt-band-en" class="chart-plot"></div>
+      <div id="hemt-band-en" class="chart-plot" role="img" aria-label="HEMT band structure: energy (eV) versus position (nm)."></div>
+      <p class="chart-note">SC: semiclassical. The squared wavefunctions are scaled and offset by their eigenenergies for display.</p>
     </div>
     <div class="chart-card">
       <div class="chart-title">Electron Density (2DEG)</div>
-      <div id="hemt-density-en" class="chart-plot"></div>
+      <div id="hemt-density-en" class="chart-plot" role="img" aria-label="HEMT electron density (cm⁻³) versus position (nm), logarithmic density axis."></div>
     </div>
   </div>
 
-  <div class="rv rv2">
-    <div class="code-card">
+  <div>
+    <details class="code-card"><summary>Reference code (before refactor)</summary><p class="code-note">The code structure and APIs are expected to change during the refactor. This example is provided for reference.</p>
       <div class="code-header">
         <span class="code-lang">Python</span>
         <span class="code-file">hemt_demo.py</span>
       </div>
-      <pre class="code-block"><code>from semisolve.core.structure import Structure1D, Layer
+      <pre class="code-block" tabindex="0"><code>from semisolve.core.structure import Structure1D, Layer
 from semisolve.core.mesh import Mesh1D
 from semisolve.core.terminals import Terminal1D, LayerBoundary
 from semisolve.materials import GaN, AlGaN
@@ -331,29 +132,28 @@ result = solver.solve(
 )
 
 print(f"Converged:  {result.converged}")
-print(f"Eigenvalues (eV): {result.eigenvalues[:5]}")</code></pre>
-    </div>
+print(f"Eigenvalues (eV): {result.eigenvalues[:5]}")</code></pre></details>
   </div>
 </div></div>
 
 <!-- PN Diode Demo -->
 <div class="sec" id="pn-en">
-  <div class="rv">
+  <div>
     <div class="sec-lb">PN Diode Demo</div>
     <h2 class="sec-t">GaN PN Diode &mdash; I-V Characteristics</h2>
     <p class="sec-d">Forward bias sweep using the drift-diffusion solver. Select a voltage to see the band diagram under that bias condition.</p>
   </div>
 
-  <div class="chart-grid rv rv1">
+  <div class="chart-grid">
     <div class="chart-card">
       <div class="chart-header">
         <div class="chart-title">Forward I-V Curve</div>
         <div class="toggle-group">
-          <button class="toggle-btn active" id="iv-lin-btn-en" onclick="setIVScale('linear','en')">Linear</button>
-          <button class="toggle-btn" id="iv-log-btn-en" onclick="setIVScale('log','en')">Log</button>
+          <button class="toggle-btn active" aria-pressed="true" id="iv-lin-btn-en" onclick="setIVScale('linear','en')">Linear</button>
+          <button class="toggle-btn" aria-pressed="false" id="iv-log-btn-en" onclick="setIVScale('log','en')">Log</button>
         </div>
       </div>
-      <div id="pn-iv-en" class="chart-plot"></div>
+      <div id="pn-iv-en" class="chart-plot" role="img" aria-label="PN diode current density (A/cm²) versus forward voltage (V)."></div>
     </div>
     <div class="chart-card">
       <div class="chart-header">
@@ -363,17 +163,17 @@ print(f"Eigenvalues (eV): {result.eigenvalues[:5]}")</code></pre>
           <select id="v-sel-en" class="v-select" onchange="updateBandSnapshot('en')"></select>
         </div>
       </div>
-      <div id="pn-band-en" class="chart-plot"></div>
+      <div id="pn-band-en" class="chart-plot" role="img" aria-label="PN diode band structure: energy (eV) versus position (nm) at the selected bias."></div>
     </div>
   </div>
 
-  <div class="rv rv2">
-    <div class="code-card">
+  <div>
+    <details class="code-card"><summary>Reference code (before refactor)</summary><p class="code-note">The code structure and APIs are expected to change during the refactor. This example is provided for reference.</p>
       <div class="code-header">
         <span class="code-lang">Python</span>
         <span class="code-file">pn_demo.py</span>
       </div>
-      <pre class="code-block"><code>import numpy as np
+      <pre class="code-block" tabindex="0"><code>import numpy as np
 from semisolve.core.structure import Structure1D, Layer
 from semisolve.core.mesh import Mesh1D
 from semisolve.core.terminals import Terminal1D, LayerBoundary
@@ -411,54 +211,58 @@ for v in np.arange(0.0, 4.0, 0.1):
     result = solver.solve(applied_voltage=v, settings=settings)
     if result.converged:
         J = solver.compute_current_density() * 1e-4  # A/m2 -> A/cm2
-        print(f"V = {v:.1f} V  J = {J:.4e} A/cm2")</code></pre>
-    </div>
+        print(f"V = {v:.1f} V  J = {J:.4e} A/cm2")</code></pre></details>
   </div>
 </div>
 
 </main>
-<footer><p><strong>Semisolve</strong> &middot; Copyright &copy; 2026 Takeru Kumabe &middot; <a href="https://github.com/semisolve/semisolve" target="_blank" rel="noopener">GitHub</a> &middot; <a href="https://pypi.org/project/semisolve/" target="_blank" rel="noopener">PyPI</a> &middot; <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">Apache License 2.0</a></p></footer>
+<footer>
+  <div class="footer-top"><a class="footer-brand" href="index.html">Semisolve.</a><p class="footer-tagline">Script your physics, solve your devices.</p></div>
+  <div class="footer-bottom"><p>&copy; 2026 Takeru Kumabe</p><div class="footer-links"><a href="https://github.com/tkrkmb" target="_blank" rel="noopener">GitHub ↗</a><a href="mailto:contact@semisolve.org">Email ↗</a><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">Apache License 2.0 ↗</a></div></div>
+</footer>
 </div>
 
 <!-- ══════ JAPANESE ══════ -->
 <div class="page" id="page-ja">
-<main>
+<main tabindex="-1">
 
 <!-- Hero -->
 <section class="demo-hero">
   <div class="demo-hero-ct">
-    <div class="sec-lb rv">インタラクティブ デモ</div>
-    <h1 class="rv rv1">シミュレーション結果</h1>
-    <p class="lead rv rv2">物理モデルに基づいてSemisolveが実際に計算したバンド図、電子密度、電流-電圧特性をインタラクティブに探索できます。</p>
+    <div class="sec-lb">インタラクティブ デモ</div>
+    <h1>計算結果から、物理を見る。</h1>
+    <p class="lead">Semisolveで事前に計算したバンド構造、電子密度、電流特性を確認できます。保存済みの結果を表示するデモで、このページ上で計算を実行するものではありません。</p>
+    <div class="demo-jumps"><a href="#hemt-ja">AlGaN/GaN HEMT ↓</a><a href="#pn-ja">GaN PNダイオード ↓</a></div>
   </div>
 </section>
 
 <!-- HEMT Demo -->
 <div class="sec-alt" id="hemt-ja"><div class="sec">
-  <div class="rv">
+  <div>
     <div class="sec-lb">HEMT デモ</div>
     <h2 class="sec-t">Al&#x2080;.&#x2082;&#x2085;Ga&#x2080;.&#x2087;&#x2085;N/GaN HEMT &mdash; バンド図と2DEG</h2>
     <p class="sec-d">自己無撞着なSchr&ouml;dinger-Poisson解法によって得られた、AlGaN/GaNヘテロ接合界面における2DEGの量子閉じ込め効果を示します。</p>
   </div>
 
-  <div class="chart-grid rv rv1">
+  <div class="chart-grid">
     <div class="chart-card">
       <div class="chart-title">バンド図</div>
-      <div id="hemt-band-ja" class="chart-plot"></div>
+      <div id="hemt-band-ja" class="chart-plot" role="img" aria-label="HEMTのバンド構造。横軸は位置（nm）、縦軸はエネルギー（eV）。"></div>
+      <p class="chart-note">SC：半古典モデル。波動関数の絶対値二乗は、表示用にスケーリングして固有エネルギーに重ねています。</p>
     </div>
     <div class="chart-card">
       <div class="chart-title">電子密度 (2DEG)</div>
-      <div id="hemt-density-ja" class="chart-plot"></div>
+      <div id="hemt-density-ja" class="chart-plot" role="img" aria-label="HEMTの電子密度。横軸は位置（nm）、縦軸は電子密度（cm⁻³）の対数軸。"></div>
     </div>
   </div>
 
-  <div class="rv rv2">
-    <div class="code-card">
+  <div>
+    <details class="code-card"><summary>参考コード（改修前）</summary><p class="code-note">コード構造・APIは大規模改修に伴い変更される予定です。以下は計算例の参考として掲載しています。</p>
       <div class="code-header">
         <span class="code-lang">Python</span>
         <span class="code-file">hemt_demo.py</span>
       </div>
-      <pre class="code-block"><code>from semisolve.core.structure import Structure1D, Layer
+      <pre class="code-block" tabindex="0"><code>from semisolve.core.structure import Structure1D, Layer
 from semisolve.core.mesh import Mesh1D
 from semisolve.core.terminals import Terminal1D, LayerBoundary
 from semisolve.materials import GaN, AlGaN
@@ -497,29 +301,28 @@ result = solver.solve(
 )
 
 print(f"Converged:  {result.converged}")
-print(f"Eigenvalues (eV): {result.eigenvalues[:5]}")</code></pre>
-    </div>
+print(f"Eigenvalues (eV): {result.eigenvalues[:5]}")</code></pre></details>
   </div>
 </div></div>
 
 <!-- PN Diode Demo -->
 <div class="sec" id="pn-ja">
-  <div class="rv">
+  <div>
     <div class="sec-lb">PN ダイオード デモ</div>
     <h2 class="sec-t">GaN PN ダイオード &mdash; 電流-電圧特性</h2>
     <p class="sec-d">ドリフト-拡散ソルバーを用いた順バイアス掃引。電圧を選択すると、そのバイアス下でのバンドダイアグラムが更新されます。</p>
   </div>
 
-  <div class="chart-grid rv rv1">
+  <div class="chart-grid">
     <div class="chart-card">
       <div class="chart-header">
         <div class="chart-title">順バイアス I-V カーブ</div>
         <div class="toggle-group">
-          <button class="toggle-btn active" id="iv-lin-btn-ja" onclick="setIVScale('linear','ja')">Linear</button>
-          <button class="toggle-btn" id="iv-log-btn-ja" onclick="setIVScale('log','ja')">Log</button>
+          <button class="toggle-btn active" aria-pressed="true" id="iv-lin-btn-ja" onclick="setIVScale('linear','ja')">Linear</button>
+          <button class="toggle-btn" aria-pressed="false" id="iv-log-btn-ja" onclick="setIVScale('log','ja')">Log</button>
         </div>
       </div>
-      <div id="pn-iv-ja" class="chart-plot"></div>
+      <div id="pn-iv-ja" class="chart-plot" role="img" aria-label="PNダイオードの電流密度（A/cm²）と順方向電圧（V）の関係。"></div>
     </div>
     <div class="chart-card">
       <div class="chart-header">
@@ -529,17 +332,17 @@ print(f"Eigenvalues (eV): {result.eigenvalues[:5]}")</code></pre>
           <select id="v-sel-ja" class="v-select" onchange="updateBandSnapshot('ja')"></select>
         </div>
       </div>
-      <div id="pn-band-ja" class="chart-plot"></div>
+      <div id="pn-band-ja" class="chart-plot" role="img" aria-label="選択した電圧でのPNダイオードのバンド構造。位置（nm）とエネルギー（eV）の関係。"></div>
     </div>
   </div>
 
-  <div class="rv rv2">
-    <div class="code-card">
+  <div>
+    <details class="code-card"><summary>参考コード（改修前）</summary><p class="code-note">コード構造・APIは大規模改修に伴い変更される予定です。以下は計算例の参考として掲載しています。</p>
       <div class="code-header">
         <span class="code-lang">Python</span>
         <span class="code-file">pn_demo.py</span>
       </div>
-      <pre class="code-block"><code>import numpy as np
+      <pre class="code-block" tabindex="0"><code>import numpy as np
 from semisolve.core.structure import Structure1D, Layer
 from semisolve.core.mesh import Mesh1D
 from semisolve.core.terminals import Terminal1D, LayerBoundary
@@ -577,13 +380,15 @@ for v in np.arange(0.0, 4.0, 0.1):
     result = solver.solve(applied_voltage=v, settings=settings)
     if result.converged:
         J = solver.compute_current_density() * 1e-4  # A/m2 -> A/cm2
-        print(f"V = {v:.1f} V  J = {J:.4e} A/cm2")</code></pre>
-    </div>
+        print(f"V = {v:.1f} V  J = {J:.4e} A/cm2")</code></pre></details>
   </div>
 </div>
 
 </main>
-<footer><p><strong>Semisolve</strong> &middot; Copyright &copy; 2026 Takeru Kumabe &middot; <a href="https://github.com/semisolve/semisolve" target="_blank" rel="noopener">GitHub</a> &middot; <a href="https://pypi.org/project/semisolve/" target="_blank" rel="noopener">PyPI</a> &middot; <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">Apache License 2.0</a></p></footer>
+<footer>
+  <div class="footer-top"><a class="footer-brand" href="index.html">Semisolve.</a><p class="footer-tagline">窒化物半導体の物理を、Pythonで。</p></div>
+  <div class="footer-bottom"><p>&copy; 2026 Takeru Kumabe</p><div class="footer-links"><a href="https://github.com/tkrkmb" target="_blank" rel="noopener">GitHub ↗</a><a href="mailto:contact@semisolve.org">Email ↗</a><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">Apache License 2.0 ↗</a></div></div>
+</footer>
 </div>
 
 <script>
@@ -621,6 +426,16 @@ for v in np.arange(0.0, 4.0, 0.1):
   function $(s){return document.querySelector(s)}
   function $$(s){return document.querySelectorAll(s)}
 
+
+  function updateControlLabels(){
+    var ja = html.lang === 'ja', dark = html.dataset.theme === 'dark';
+    $('#themeBtn').setAttribute('aria-label', ja ? (dark ? 'ライトテーマに切り替える' : 'ダークテーマに切り替える') : (dark ? 'Switch to light mode' : 'Switch to dark mode'));
+    $('#langBtn').setAttribute('aria-label', ja ? 'Switch to English' : '日本語に切り替える');
+    $('#langBtn').setAttribute('lang', ja ? 'en' : 'ja');
+    $('#nav').setAttribute('aria-label', ja ? 'メインナビゲーション' : 'Main navigation');
+    $('#skipLink').textContent = ja ? '本文へ移動' : 'Skip to content';
+  }
+
   /* ── Theme ── */
   var theme = localStorage.getItem('ss-theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
   setTheme(theme, true);
@@ -628,7 +443,7 @@ for v in np.arange(0.0, 4.0, 0.1):
   function setTheme(t, init){
     html.dataset.theme = t;
     var btn = $('#themeBtn');
-    btn.setAttribute('aria-label', t==='dark'?'Switch to light mode':'Switch to dark mode');
+    updateControlLabels();
     btn.innerHTML = t==='dark'
       ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>'
       : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
@@ -650,14 +465,14 @@ for v in np.arange(0.0, 4.0, 0.1):
   ];
   var navJA=[
     {h:'index.html#feat-ja',l:'機能'},
-    {h:'index.html#stat-ja',l:'状況'},
+    {h:'index.html#stat-ja',l:'開発状況'},
     {h:'index.html#lic-ja', l:'ライセンス'},
     {h:'index.html#con-ja', l:'連絡先'},
     {h:'demo.html',         l:'デモ',active:true}
   ];
 
   var lang = localStorage.getItem('ss-lang');
-  if(!lang){ var n=(navigator.language||'').toLowerCase(); lang=n.startsWith('ja')?'ja':'en'; }
+  if(lang!=='en' && lang!=='ja'){ var n=(navigator.language||'').toLowerCase(); lang=n.startsWith('ja')?'ja':'en'; }
 
   function loadJaFont(){
     if(document.getElementById('ja-font')) return;
@@ -672,6 +487,9 @@ for v in np.arange(0.0, 4.0, 0.1):
     body.classList.toggle('ja', l==='ja');
     $$('.page').forEach(function(p){p.classList.remove('active')});
     var pg=$('#page-'+l); if(pg) pg.classList.add('active');
+    $$('main').forEach(function(el){ el.removeAttribute('id'); });
+    if(pg) pg.querySelector('main').id = 'main-content';
+    updateControlLabels();
     $('#langBtn').textContent = l==='en'?'\u65E5\u672C\u8A9E':'English';
     var ul=$('#navUl'), items=l==='en'?navEN:navJA;
     ul.innerHTML='';
@@ -681,38 +499,16 @@ for v in np.arange(0.0, 4.0, 0.1):
       ul.appendChild(li);
     });
     if(l==='ja') loadJaFont();
-    initReveals();
+
     if(!init) window.scrollTo({top:0});
     if(window.hemtData) renderHEMTCharts();
     if(window.pnData)   renderPNCharts();
   }
 
+var hashLanguage = location.hash.match(/-(en|ja)$/);
+  if(hashLanguage) lang = hashLanguage[1];
   setLang(lang, true);
   $('#langBtn').onclick = function(){ setLang(lang==='en'?'ja':'en', false); };
-
-  /* ── Nav scroll ── */
-  var tick=false;
-  window.addEventListener('scroll', function(){
-    if(!tick){
-      requestAnimationFrame(function(){
-        $('#nav').classList.toggle('scrolled', scrollY>40);
-        tick=false;
-      });
-      tick=true;
-    }
-  },{passive:true});
-
-  /* ── Reveals ── */
-  var revObs;
-  function initReveals(){
-    if(revObs) revObs.disconnect();
-    revObs=new IntersectionObserver(function(es){
-      es.forEach(function(e){
-        if(e.isIntersecting){e.target.classList.add('vis');revObs.unobserve(e.target);}
-      });
-    },{threshold:.08,rootMargin:'0px 0px -60px 0px'});
-    $$('.page.active .rv').forEach(function(el){el.classList.remove('vis');revObs.observe(el);});
-  }
 
   /* ── Plotly helpers ── */
   function getCSSVar(name){
@@ -720,31 +516,39 @@ for v in np.arange(0.0, 4.0, 0.1):
   }
 
   function plotlyLayout(extraLayout){
-    var bg  = getCSSVar('--bg');
-    var bg2 = getCSSVar('--bg2');
-    var tx  = getCSSVar('--tx');
-    var tx2 = getCSSVar('--tx2');
-    var tx3 = getCSSVar('--tx3');
-    var brd = getCSSVar('--border');
+    var bg = getCSSVar('--card'), tx = getCSSVar('--tx');
+    var muted = getCSSVar('--tx3'), border = getCSSVar('--border');
+    var baseAxis = {
+      gridcolor: getCSSVar('--border-lt'), linecolor: border,
+      zerolinecolor: border, tickfont: {color: muted, size: 11},
+      titlefont: {color: muted, size: 12}, automargin: true
+    };
+    var extra = extraLayout || {};
     return Object.assign({
-      paper_bgcolor: bg,
-      plot_bgcolor:  bg2,
-      font: {family:'Inter,system-ui,sans-serif', color:tx, size:11},
-      margin:{t:24,r:24,b:48,l:56},
-      xaxis:{
-        gridcolor:brd, linecolor:brd, zerolinecolor:brd,
-        tickfont:{color:tx2,size:10}, titlefont:{color:tx2,size:11}
+      paper_bgcolor: bg, plot_bgcolor: bg,
+      font: {family: 'Inter, system-ui, sans-serif', color: tx, size: 12},
+      margin: {t: 16, r: 16, b: 40, l: 56},
+      legend: {
+        orientation: 'h', x: 0, y: -0.25, xanchor: 'left', yanchor: 'top',
+        bgcolor: 'rgba(0,0,0,0)', font: {color: muted, size: 11}
       },
-      yaxis:{
-        gridcolor:brd, linecolor:brd, zerolinecolor:brd,
-        tickfont:{color:tx2,size:10}, titlefont:{color:tx2,size:11}
-      },
-      legend:{bgcolor:'rgba(0,0,0,0)', font:{color:tx2,size:10}},
-      hoverlabel:{bgcolor:bg, bordercolor:brd, font:{color:tx}},
-    }, extraLayout||{});
+      hoverlabel: {bgcolor: bg, bordercolor: border, font: {color: tx}}
+    }, extra, {
+      xaxis: Object.assign({}, baseAxis, extra.xaxis || {}),
+      yaxis: Object.assign({}, baseAxis, extra.yaxis || {})
+    });
   }
 
   var plotlyConfig = {responsive:true, displayModeBar:false};
+  var chartResize = new ResizeObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.contentRect.width > 0 && entry.target.data && typeof Plotly !== 'undefined') {
+        Plotly.Plots.resize(entry.target);
+      }
+    });
+  });
+  $$('.chart-plot').forEach(function(plot){chartResize.observe(plot);});
+
 
   /* ── HEMT Charts ── */
   window.hemtData = null;
@@ -756,19 +560,12 @@ for v in np.arange(0.0, 4.0, 0.1):
     var suffix = lang;
     var z = d.z;
 
-    // ── Band diagram palette — blue family + red accent ──────────────
-    // Band edges (Ec, Ev) in blue shades (structural).
-    // Wavefunctions in red accent family (the "highlighted" physics result).
-    var isDark = document.documentElement.getAttribute('data-theme')==='dark';
-    var C_EC_Q  = isDark ? '#60a5fa' : '#1d4ed8'; // Ec quantum (solid)
-    var C_EC_SC = isDark ? '#93c5fd' : '#93c5fd'; // Ec semiclassical (dashed)
-    var C_EV_Q  = isDark ? '#3b82f6' : '#3b82f6'; // Ev quantum (solid)
-    var C_EV_SC = isDark ? '#bfdbfe' : '#bfdbfe'; // Ev semiclassical (dashed)
-    var C_EF    = isDark ? '#64748b' : '#94a3b8'; // Fermi level (neutral slate)
-
-    var psiColors = isDark
-      ? ['#f87171','#fb7185','#fca5a5','#fecaca','#fda4af']
-      : ['#dc2626','#ef4444','#f87171','#fca5a5','#fecdd3'];
+    // Neutral ink and redundant line patterns distinguish physical quantities.
+    var C_EC_Q = getCSSVar('--tx'), C_EC_SC = getCSSVar('--tx3');
+    var C_EV_Q = getCSSVar('--tx2'), C_EV_SC = getCSSVar('--tx3');
+    var C_EF = getCSSVar('--tx3');
+    var psiColors = [getCSSVar('--tx'), getCSSVar('--tx2'), getCSSVar('--tx3'), getCSSVar('--tx2'), getCSSVar('--tx3')];
+    var psiDashes = ['dash', 'dot', 'dashdot', 'longdash', 'longdashdot'];
     var eigenNames = ['E\u2081','E\u2082','E\u2083','E\u2084','E\u2085'];
 
     var maxPsi = Math.max.apply(null, d.eigenvectors['psi2_0']);
@@ -782,12 +579,12 @@ for v in np.arange(0.0, 4.0, 0.1):
       {x:z, y:d.semiclassical.Ec, name:'Ec (SC)',
        mode:'lines', line:{color:C_EC_SC,width:1.5,dash:'dash'}, legendrank:4},
       {x:z, y:d.semiclassical.Ev, name:'Ev (SC)',
-       mode:'lines', line:{color:C_EV_SC,width:1.5,dash:'dash'}, legendrank:6},
+       mode:'lines', line:{color:C_EV_SC,width:1.5,dash:'dashdot'}, legendrank:6},
       // Quantum band edges (main result, front)
       {x:z, y:d.quantum.Ec, name:'Ec',
        mode:'lines', line:{color:C_EC_Q,width:2.5}, legendrank:1},
       {x:z, y:d.quantum.Ev, name:'Ev',
-       mode:'lines', line:{color:C_EV_Q,width:2}, legendrank:2},
+       mode:'lines', line:{color:C_EV_Q,width:2,dash:'longdash'}, legendrank:2},
     ];
 
     for(var i=0; i<5; i++){
@@ -799,7 +596,7 @@ for v in np.arange(0.0, 4.0, 0.1):
         x:z, y:psiY,
         name: eigenNames[ii]+' = '+E_i.toFixed(3)+' eV',
         mode:'lines',
-        line:{color:psiColors[ii], width: ii===0 ? 2 : 1.5},
+        line:{color:psiColors[ii], width: ii===0 ? 2 : 1.5, dash:psiDashes[ii]},
         legendrank: 20+ii
       });
     }
@@ -807,11 +604,11 @@ for v in np.arange(0.0, 4.0, 0.1):
     Plotly.react('hemt-band-'+suffix, bandTraces, plotlyLayout({
       xaxis:{title:'Position (nm)', range:[160,225]},
       yaxis:{title:'Energy (eV)', range:[-1.2, 1.8]},
-      height:320,
+      height:420,
     }), plotlyConfig);
 
     // Density: quantum (solid, primary) vs semiclassical (dashed, muted)
-    var C_SC = isDark ? '#64748b' : '#94a3b8';
+    var C_SC = getCSSVar('--tx3');
     var densityTraces = [
       {x:z, y:d.semiclassical.n, name:'Semiclassical',
        mode:'lines', line:{color:C_SC,width:1.5,dash:'dash'}},
@@ -821,7 +618,7 @@ for v in np.arange(0.0, 4.0, 0.1):
     Plotly.react('hemt-density-'+suffix, densityTraces, plotlyLayout({
       xaxis:{title:'Position (nm)', range:[160,225]},
       yaxis:{title:'Electron Density (cm\u207B\u00B3)', type:'log', range:[14, 21], exponentformat:'power'},
-      height:320,
+      height:420,
     }), plotlyConfig);
   }
 
@@ -842,6 +639,7 @@ for v in np.arange(0.0, 4.0, 0.1):
     var sel = document.getElementById('v-sel-'+suffix);
     if(!sel || !window.pnData) return;
     var snaps = window.pnData.snapshots;
+    var previous = sel.value;
     sel.innerHTML = '';
     Object.keys(snaps).sort(function(a,b){
       return parseFloat(a)-parseFloat(b);
@@ -851,7 +649,7 @@ for v in np.arange(0.0, 4.0, 0.1):
       opt.textContent = key;
       sel.appendChild(opt);
     });
-    sel.value = '0.0V';
+    sel.value = Object.hasOwn(snaps, previous) ? previous : '0.0V';
   }
 
   function renderPNCharts(){
@@ -861,15 +659,14 @@ for v in np.arange(0.0, 4.0, 0.1):
     var suffix = lang;
     populateVoltageSelect(suffix);
     renderIVChart(suffix);
-    renderBandSnapshot(suffix, '0.0V');
+    renderBandSnapshot(suffix, document.getElementById('v-sel-'+suffix).value);
   }
 
   function renderIVChart(suffix){
     var d = window.pnData;
     if(!d) return;
     var scale = ivScaleState[suffix] || 'linear';
-    var isDark = document.documentElement.getAttribute('data-theme')==='dark';
-    var C_IV = isDark ? '#60a5fa' : '#1d4ed8';
+    var C_IV = getCSSVar('--tx');
     var voltages = d.iv_curve.map(function(p){return p.voltage;});
     var currents = d.iv_curve.map(function(p){return Math.abs(p.J_A_cm2);});
     var traces = [{
@@ -884,7 +681,7 @@ for v in np.arange(0.0, 4.0, 0.1):
     Plotly.react('pn-iv-'+suffix, traces, plotlyLayout({
       xaxis:{title:'Forward Voltage (V)'},
       yaxis: yaxis,
-      height:320,
+      height:420,
     }), plotlyConfig);
   }
 
@@ -892,22 +689,18 @@ for v in np.arange(0.0, 4.0, 0.1):
     var d = window.pnData;
     if(!d || !d.snapshots[voltageKey]) return;
     var s = d.snapshots[voltageKey];
-    // Band edges in blue (structural); quasi-Fermi in red accent (the perturbation).
-    var isDark = document.documentElement.getAttribute('data-theme')==='dark';
-    var C_EC   = isDark ? '#60a5fa' : '#1d4ed8';
-    var C_EV   = isDark ? '#3b82f6' : '#3b82f6';
-    var C_EFN  = isDark ? '#f87171' : '#dc2626';
-    var C_EFP  = isDark ? '#fca5a5' : '#f87171';
+    var C_EC = getCSSVar('--tx'), C_EV = getCSSVar('--tx2');
+    var C_EFN = getCSSVar('--tx2'), C_EFP = getCSSVar('--tx3');
     var traces = [
       {x:s.z, y:s.Ec,  name:'Ec',  mode:'lines', line:{color:C_EC, width:2}},
       {x:s.z, y:s.Ev,  name:'Ev',  mode:'lines', line:{color:C_EV, width:2, dash:'dot'}},
       {x:s.z, y:s.Efn, name:'E\u1da0\u207F (electron)', mode:'lines', line:{color:C_EFN, width:1.5, dash:'dash'}},
-      {x:s.z, y:s.Efp, name:'E\u1da0\u1d56 (hole)',     mode:'lines', line:{color:C_EFP, width:1.5, dash:'dot'}},
+      {x:s.z, y:s.Efp, name:'E\u1da0\u1d56 (hole)',     mode:'lines', line:{color:C_EFP, width:1.5, dash:'dashdot'}},
     ];
     Plotly.react('pn-band-'+suffix, traces, plotlyLayout({
       xaxis:{title:'Position (nm)'},
       yaxis:{title:'Energy (eV)'},
-      height:320,
+      height:420,
     }), plotlyConfig);
   }
 
@@ -915,6 +708,8 @@ for v in np.arange(0.0, 4.0, 0.1):
     ivScaleState[suffix] = scale;
     document.getElementById('iv-lin-btn-'+suffix).classList.toggle('active', scale==='linear');
     document.getElementById('iv-log-btn-'+suffix).classList.toggle('active', scale==='log');
+    document.getElementById('iv-lin-btn-'+suffix).setAttribute('aria-pressed', scale==='linear');
+    document.getElementById('iv-log-btn-'+suffix).setAttribute('aria-pressed', scale==='log');
     renderIVChart(suffix);
   };
 
